@@ -1,0 +1,153 @@
+package javaassignment;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
+        double initialBalance = Double.parseDouble(request.getParameter("initialBalance"));
+
+        // JDBC URL, username, and password of your MySQL server
+        String jdbcURL = "jdbc:mysql://localhost:3306/bank_db";
+        String dbUser = "root";
+        String dbPassword = "Tejeshakula123@";
+
+        Connection connection = null;
+
+        try {
+            // Load the MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Create a connection to the database
+            connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+
+            // SQL query to insert a new user into the 'users' table
+            String sql = "INSERT INTO users (user_id, password, balance) VALUES (?, ?, ?";
+
+            // Create a prepared statement
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, userId);
+            preparedStatement.setString(2, password);
+            preparedStatement.setDouble(3, initialBalance);
+
+            // Execute the query to insert the user
+            int rows = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            preparedStatement.close();
+
+            if (rows > 0) {
+                // Registration successful, print a message and redirect to the login page
+                response.getWriter().write("Registration Successful! User ID: " + userId);
+                response.sendRedirect("login.jsp");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+ 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+ 
+/**
+* Servlet implementation class AddProduct
+*/
+@WebServlet("/AddProduct")
+public class RegisterServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AddProduct() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+ 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+ 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		 String userId = request.getParameter("userId");
+	        String password = request.getParameter("password");
+	        double initialBalance = Double.parseDouble(request.getParameter("initialBalance"));
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			Connection con = null;
+			 try {
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/productlist", "root", "Tejeshakula123@");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		PreparedStatement ps;
+		try {
+			ps = con.prepareStatement("insert into products (pid,pname,pprice) values(?,?,?) ");
+			ps.setInt(1, pid);
+			ps.setString(2, pname);
+			ps.setString(3,pprice);
+			int x=ps.executeUpdate();
+			if(x!=0) {
+				PrintWriter out=response.getWriter();
+				response.setContentType("text/html");
+				out.println("Record Inserted...");
+				out.println("<div class=\"form-group\">\r\n"
+						+ "    	<a href=\"Login.html\" ><button>Re-Login</button></a>\r\n"
+						+ "    </div>");
+		}} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 
+		System.out.println("Connection Established....");
+	}
+ 
+}
+

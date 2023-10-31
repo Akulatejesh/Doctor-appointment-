@@ -1,0 +1,54 @@
+package javaassignment;
+
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
+        double initialBalance = Double.parseDouble(request.getParameter("initialBalance"));
+
+        // Create a database connection using the DatabaseConnection class
+        Connection connection = DatabaseConnection.getConnection();
+
+        if (connection != null) {
+            try {
+                // SQL query to insert a new user into the 'users' table
+                String sql = "INSERT INTO users (user_id, password, balance) VALUES (?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, userId);
+                preparedStatement.setString(2, password);
+                preparedStatement.setDouble(3, initialBalance);
+
+                // Execute the query to insert the user
+                int rows = preparedStatement.executeUpdate();
+
+                // Close the database connection
+                preparedStatement.close();
+                connection.close();
+
+                if (rows > 0) {
+                    // Registration successful, print a message and redirect to the login page
+                    response.getWriter().write("Registration Successful! User ID: " + userId);
+                    response.sendRedirect("login.jsp");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Handle the case where the database connection is not established
+            response.sendRedirect("register.jsp"); // You can create an error page
+        }
+    }
+}

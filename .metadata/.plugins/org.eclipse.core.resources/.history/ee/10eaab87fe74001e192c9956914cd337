@@ -1,0 +1,76 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Receptionist Dashboard</title>
+</head>
+<body>
+
+<h2>Add Patient Details</h2>
+<form action="/receptionist/patient-details" method="post">
+    <div>
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" name="patientName" required>
+    </div>
+    <div>
+        <label for="patientInfo">Patient Info:</label>
+        <textarea id="patientInfo" name="patientInfo" required></textarea>
+    </div>
+    <div>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+    </div>
+    <div>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+    </div>
+    <div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required>
+    </div>
+    <div>
+        <label for="appointmentDate">Appointment Date:</label>
+        <input type="date" id="appointmentDate" name="appointmentDate" required>
+    </div>
+    <div>
+        <label for="appointmentTime">Appointment Time:</label>
+        <input type="time" id="appointmentTime" name="appointmentTime" required>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+<h2>Existing Patient Details</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Patient Info</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Appointment Date</th>
+            <th>Appointment Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="patient : ${patientDetails}">
+            <td th:text="${patient.patientName}"></td>
+            <td th:text="${patient.patientInfo}"></td>
+            <td th:text="${patient.age}"></td>
+            <td th:text="${patient.address}"></td>
+            <td th:text="${patient.phoneNumber}"></td>
+            <td th:text="${patient.appointmentDate}"></td>
+            <td th:text="${patient.appointmentTime}"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<a href="/logout">Logout</a>
+
+</body>
+</html>

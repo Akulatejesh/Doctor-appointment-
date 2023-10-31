@@ -1,0 +1,5 @@
+package com.project.demo.services.repositories;
+
+public class CurrencyConversionRepository {
+
+}

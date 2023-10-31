@@ -1,0 +1,29 @@
+package com.example.demo.service;
+ 
+ 
+import com.example.demo.model.CurrencyConversion;
+import com.example.demo.repositories.CurrencyConversionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+ 
+import java.util.List;
+import java.util.Optional;
+ 
+@Service
+public class CurrencyConversionService {
+ 
+    private final CurrencyConversionRepository repository;
+ 
+    @Autowired
+    public CurrencyConversionService(CurrencyConversionRepository repository) {
+        this.repository = repository;
+    }
+ 
+    public List<CurrencyConversion> getAllCurrencyConversions() {
+        return repository.findAll();
+    }
+ 
+    public void addCurrencyConversion(CurrencyConversion currencyConversion) {
+        repository.save(currencyConversion);
+    }
+}

@@ -1,0 +1,22 @@
+package javaassignment;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnection {
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/bank_db";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "Tejeshakula123@";
+
+    // Method to establish a database connection
+    public static Connection getConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null; // Return null if the connection couldn't be established
+        }
+    }
+}

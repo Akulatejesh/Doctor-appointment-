@@ -1,0 +1,83 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor's Dashboard</title>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include jQuery UI CSS and JavaScript -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $("#leaveStartDate").datepicker({
+                dateFormat: 'yy-mm-dd' // Set the date format as desired
+            });
+
+            $("#leaveEndDate").datepicker({
+                dateFormat: 'yy-mm-dd' // Set the date format as desired
+            });
+        });
+
+        function displayMessage(message) {
+            alert(message);
+        }
+    </script>
+</head>
+<body>
+
+<h2>Welcome ${loggedInDoctor.fullName}</h2> <!-- Display the doctor's name -->
+
+<h3>Patients Assigned to You:</h3>
+<table border="1">
+    <tr>
+        <th>Patient Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Appointment Date</th>
+        <th>Appointment Time</th>
+    </tr>
+    <c:forEach items="${patients}" var="patient">
+        <c:if test="${patient.doctor.id == loggedInDoctor.id}">
+            <tr>
+                <td>${patient.patientName}</td>
+                <td>${patient.age}</td>
+                <td>${patient.address}</td>
+                <td>${patient.phoneNumber}</td>
+                <td>${patient.appointmentDate}</td>
+                <td>${patient.appointmentTime}</td>
+            </tr>
+        </c:if>
+    </c:forEach>
+</table>
+
+<h3>Leave Request</h3>
+<form method="post" action="/doctor/request-leave">
+    <div>
+        <label for="leaveStartDate">From Date:</label>
+        <input type="text" id="leaveStartDate" name="leaveStartDate" required>
+    </div>
+    <div>
+        <label for="leaveEndDate">To Date:</label>
+        <input type="text" id="leaveEndDate" name="leaveEndDate" required>
+    </div>
+    <button type="submit" onclick="displayMessage('Leave request applied successfully.');">Request Leave</button>
+</form>
+
+<h3>Cancel Appointment</h3>
+<form method="post" action="/doctor/cancel-leave">
+    <button type="submit" onclick="displayMessage('Appointment cancelled successfully.');">Cancel Leave Request</button>
+</form>
+
+
+<a href="/logout">Logout</a>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:05:29 +0530] "GET /Javaassignment/index.jsp HTTP/1.1" 200 284
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:05:30 +0530] "GET /favicon.ico HTTP/1.1" 404 762
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:05:34 +0530] "GET /Javaassignment/login.jsp HTTP/1.1" 200 359
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:05:41 +0530] "POST /Javaassignment/LoginServlet HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:05:42 +0530] "GET /Javaassignment/home.jsp HTTP/1.1" 200 372
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:05:44 +0530] "GET /Javaassignment/transfer.jsp HTTP/1.1" 200 405
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:06:00 +0530] "POST /Javaassignment/TransferServlet HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [20/Oct/2023:10:06:00 +0530] "GET /Javaassignment/home.jsp HTTP/1.1" 200 372

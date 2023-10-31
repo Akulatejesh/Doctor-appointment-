@@ -1,0 +1,107 @@
+package com.project.demo.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.project.demo.entities.Doctor;
+import com.project.demo.entities.Patient;
+import com.project.demo.entities.PatientDetails;
+import com.project.demo.repository.DoctorRepository;
+import com.project.demo.repository.PatientDetailsRepository;
+import com.project.demo.services.PatientDetailsService;
+import com.project.demo.services.PatientService;
+ 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+ 
+@Controller
+public class PatientController {
+	
+	@Autowired
+	private PatientDetailsRepository patientdetailsrepository;
+	@Autowired
+    private DoctorRepository doctorRepository;
+	
+    @Autowired
+    private PatientService patientService;
+    
+    @Autowired
+    private PatientDetailsService patientdetailsservice;
+    
+    @GetMapping("/receptionist-dashboard")
+    public String welcomepatient(Model model) {
+    	 List<Doctor> doctors = doctorRepository.findAll();
+         model.addAttribute("doctors", doctors);
+    	return "receptionist-dashboard";
+    }
+ 
+    @GetMapping("/patientdetailsdisplay")
+    public String displayPatientDetails(Model model, HttpSession session) {
+        // Retrieve the logged-in patient
+        Patient loggedInPatient = (Patient) session.getAttribute("loggedInPatient");
+
+        if (loggedInPatient != null) {
+            // Fetch the patient's details based on their ID
+            PatientDetails patientDetails = patientService.findPatientDetailsByPatientId(loggedInPatient.getId());
+
+            if (patientDetails != null) {
+                model.addAttribute("patientDetails", patientDetails);
+                return "patientdetailsdisplay"; // Assuming you have a JSP file named "patientdetailsdisplay.jsp"
+            } else {
+                // Handle the case where patient details are not found
+                return "redirect:/error"; // Redirect to an error page
+            }
+        } else {
+            // Handle the case where the patient is not logged in
+            return "redirect:/patientlogin"; // Redirect to the patient login page
+        }
+    }
+    
+    @GetMapping("/patientdetailsdisplay")
+    public String display() {
+    	return "patientdetailsdisplay";
+    }
+ 
+    @PostMapping("/patientregistration")
+    public String registerPatient(@RequestParam String username, @RequestParam String password,HttpServletRequest request) {
+        Patient patient = patientService.registerPatient(username, password);
+ 
+        if (patient == null) {
+            // Handle the case where registration failed (e.g., username already in use)
+        	request.setAttribute("error", "Invalid login. Please try again.");
+        	return "redirect:/patientregistration"; // Redirect back to registration page with an error message
+        }
+        else {
+ 
+        // Redirect to the patient's dashboard or another page
+        return "redirect:/receptionist-dashboard";
+    }}
+ 
+    @GetMapping("/patientlogin")
+    public String patientLoginPage() {
+        return "patientlogin";
+    }
+ 
+    @PostMapping("/patientlogin")
+    public String loginPatient(@RequestParam String username, @RequestParam String password,HttpServletRequest request) {
+        Patient patient = patientService.loginPatient(username, password);
+ 
+        if (patient == null) {
+            // Handle the case where login failed (e.g., invalid credentials)
+        	request.setAttribute("error", "Invalid registration. Please try again.");
+ 
+        	return "redirect:/patientlogin"; // Redirect back to login page with an error message
+        }
+        else {
+ 
+        // Redirect to the patient's dashboard or another page
+        return "redirect:/patientdetailsdisplay";
+    }}
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receptionist Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Receptionist John Doe</h1>
+
+    <!-- Your receptionist dashboard content goes here -->
+
+    <a href="/logout">Logout</a>
+</body>
+</html>

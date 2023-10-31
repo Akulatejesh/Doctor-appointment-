@@ -1,0 +1,27 @@
+package com.project.demo.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import com.project.demo.services.DoctorService;
+
+@Controller
+public class DoctorController {
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @PostMapping("/doctor/login")
+    public String loginDoctor(String username, String password, Model model) {
+        boolean isValidDoctor = doctorService.validateDoctorCredentials(username, password);
+
+        if (isValidDoctor) {
+            // Redirect to the doctor's dashboard or perform the desired action
+            return "doctor/dashboard"; // Provide the appropriate view name.
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "doctor/login"; // Return to the login page with an error message.
+        }
+    }
+}

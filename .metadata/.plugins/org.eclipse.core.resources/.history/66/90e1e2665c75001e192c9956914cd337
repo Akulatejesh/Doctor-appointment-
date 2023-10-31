@@ -1,0 +1,40 @@
+package com.project.demo.controller;
+
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+public class AdminController {
+
+    @GetMapping("/admin/login")
+    public String adminLoginPage() {
+        return "admin/login"; // Assuming you have a JSP file named "login.jsp" for admin login
+    }
+
+    @GetMapping("/admin/dashboard")
+    public String adminDashboard() {
+        return "admin/dashboard"; // Assuming you have a JSP file for the admin's dashboard
+    }
+
+    @PostMapping("/admin/login")
+    public String adminLogin(
+            @RequestParam String username,
+            @RequestParam String password,
+            HttpSession session
+    ) {
+        // Static admin credentials
+        if ("tester".equals(username) && "adminpass".equals(password)) {
+            // Authentication successful
+            session.setAttribute("loggedInAdmin", username);
+            return "redirect:/admin/dashboard"; // Redirect to the admin dashboard page
+        } else {
+            // Authentication failed
+            return "redirect:/admin/login?error=true"; // Admin login page with an error message
+        }
+    }
+}

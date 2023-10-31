@@ -1,0 +1,40 @@
+package com.project.demo.controller;
+
+package com.project.demo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+public class UserController {
+
+    @GetMapping("/user/login")
+    public String userLoginPage() {
+        return "user/login"; // Assuming you have a JSP file named "login.jsp" for user login
+    }
+
+    @GetMapping("/user/dashboard")
+    public String userDashboard() {
+        return "user/dashboard"; // Assuming you have a JSP file for the user's dashboard
+    }
+
+    @PostMapping("/user/login")
+    public String userLogin(
+            @RequestParam String username,
+            @RequestParam String password,
+            HttpSession session
+    ) {
+        // Static user credentials
+        if ("user123".equals(username) && "userpass".equals(password)) {
+            // Authentication successful
+            session.setAttribute("loggedInUser", username);
+            return "redirect:/user/dashboard"; // Redirect to the user dashboard page
+        } else {
+            // Authentication failed
+            return "redirect:/user/login?error=true"; // User login page with an error message
+        }
+    }
+}

@@ -1,0 +1,42 @@
+package com.example.demo.controller;
+ 
+ 
+ 
+import com.example.demo.model.CurrencyConversion;
+import com.example.demo.service.CurrencyConversionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+ 
+import java.util.List;
+ 
+@Controller
+public class CurrencyConversionController {
+	@Autowired
+    private  CurrencyConversionService service;
+ 
+    
+    public CurrencyConversionController(CurrencyConversionService service) {
+        this.service = service;
+    }
+ 
+    @GetMapping("/currency-conversions")
+    public String getAllCurrencyConversions(Model model) {
+        List<CurrencyConversion> currencyConversions = service.getAllCurrencyConversions();
+        model.addAttribute("currencyConversions", currencyConversions);
+        return "currency-conversions";
+    }
+ 
+    @GetMapping("/currency-conversions/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("currencyConversion", new CurrencyConversion());
+        return "add-currency-conversion";
+    }
+ 
+    @PostMapping("/currency-conversions/add")
+    public String addCurrencyConversion(@ModelAttribute CurrencyConversion currencyConversion) {
+        service.addCurrencyConversion(currencyConversion);
+        return "redirect:/currency-conversions";
+    }
+}

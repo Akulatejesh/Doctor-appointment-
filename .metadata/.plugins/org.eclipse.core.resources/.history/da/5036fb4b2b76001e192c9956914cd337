@@ -1,0 +1,44 @@
+package com.project.demo.controller;
+
+import com.project.demo.entities.Doctor;
+import com.project.demo.repository.DoctorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+
+@Controller
+public class DoctorController {
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login"; // Assuming you have a JSP file named "login.jsp" for doctor login
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboardPage() {
+        return "dashboard"; // Assuming you have a JSP file for the doctor's dashboard
+    }
+
+    
+
+    @PostMapping("/login")
+    public String login(@RequestParam String user, @RequestParam String pass, HttpSession session) {
+        Doctor doctorFromDB = doctorRepository.findByUsernameAndPassword(user, pass);
+
+        if (doctorFromDB != null) {
+            // Authentication successful
+            session.setAttribute("loggedInDoctor", doctorFromDB);
+            return "redirect:/dashboard"; // Redirect to the doctor's dashboard page
+        } else {
+            // Authentication failed
+            return "redirect:/error"; // Doctor login page with an error message
+        }
+    }
+}

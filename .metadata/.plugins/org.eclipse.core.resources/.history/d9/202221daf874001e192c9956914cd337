@@ -1,0 +1,16 @@
+<
+
+<!-- Patient details form -->
+<form action="/receptionist/patient-details" method="post">
+    <div>
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" name="patientName" required>
+    </div>
+    <div>
+        <label for="patientInfo">Patient Info:</label>
+        <input type="text" id="patientInfo" name="patientInfo" required>
+    </div>
+    <div>
+        <button type="submit">Add Patient Details</button>
+    </div>
+</form>

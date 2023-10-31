@@ -1,0 +1,62 @@
+package com.project.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.project.demo.entities.DoctorsDetails;
+import com.project.demo.services.DoctorsDetailsService;
+
+@Controller
+public class DoctorsDetailsController {
+    @Autowired
+    private DoctorsDetailsService doctorsDetailsService;
+
+    @GetMapping("/doctors")
+    public String showDoctors(Model model) {
+        Iterable<DoctorsDetails> doctors = doctorsDetailsService.getAllDoctors();
+        model.addAttribute("doctors", doctors);
+        return "doctors-list"; // Create a Thymeleaf HTML file to display the list of doctors
+    }
+
+    @GetMapping("/doctor/add")
+    public String showDoctorForm() {
+        return "add-doctor"; // Create an HTML form to add a new doctor
+    }
+
+    @PostMapping("/doctor/add")
+    public String addDoctor(@RequestParam String name, @RequestParam String specialization) {
+        DoctorsDetails doctor = new DoctorsDetails();
+        doctor.setName(name);
+        doctor.setSpecialization(specialization);
+        doctorsDetailsService.saveDoctorDetails(doctor);
+        return "redirect:/doctors";
+    }
+
+    @GetMapping("/doctor/edit")
+    public String showEditDoctorForm(@RequestParam Long id, Model model) {
+        DoctorsDetails doctor = doctorsDetailsService.getDoctorDetailsById(id);
+        model.addAttribute("doctor", doctor);
+        return "edit-doctor"; // Create an HTML form to edit doctor details
+    }
+
+    @PostMapping("/doctor/edit")
+    public String editDoctor(@RequestParam Long id, @RequestParam String name, @RequestParam String specialization) {
+        DoctorsDetails doctor = doctorsDetailsService.getDoctorDetailsById(id);
+        if (doctor != null) {
+            doctor.setName(name);
+            doctor.setSpecialization(specialization);
+            doctorsDetailsService.saveDoctorDetails(doctor);
+        }
+        return "redirect:/doctors";
+    }
+
+    @GetMapping("/doctor/delete")
+    public String deleteDoctor(@RequestParam Long id) {
+        doctorsDetailsService.deleteDoctorDetails(id);
+        return "redirect:/doctors";
+    }
+}

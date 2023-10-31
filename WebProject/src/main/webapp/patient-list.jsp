@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Patients List</title>
+</head>
+<body>
+    <h1>Patients List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <!-- Add more column headers as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${patients}" var="patient">
+                <tr>
+                    <td>${patient.id}</td>
+                    <td>${patient.name}</td>
+                    <td>${patient.age}</td>
+                    <td>${patient.gender}</td>
+                    <!-- Add more columns to display other patient details -->
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</body>
+</html>

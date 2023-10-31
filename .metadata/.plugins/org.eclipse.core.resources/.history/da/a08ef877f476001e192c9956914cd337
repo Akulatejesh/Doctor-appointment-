@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Administrator John Doe</h1>
+    
+    <h2>Admin Actions</h2>
+    <ul>
+        <li><a href="/administrator/manage-doctors">Manage Doctors</a></li>
+        <li><a href="/administrator/manage-receptionists">Manage Receptionists</a></li>
+    </ul>
+    
+    <h2>System Logs</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Log ID</th>
+                <th>Date & Time</th>
+                <th>Event</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="log : ${systemLogs}">
+                <td th:text="${log.id}">1</td>
+                <td th:text="${log.dateTime}">2023-11-01 10:00 AM</td>
+                <td th:text="${log.event}">System Event</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <a href="/administrator/logout">Logout</a>
+</body>
+</html>

@@ -1,0 +1,28 @@
+package com.project.demo.services;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.demo.model.Appointment;
+import com.project.demo.repositories.AppointmentRepository;
+
+@Service
+public class AppointmentService {
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
+    public Appointment getAppointmentById(Long appointmentId) {
+        return appointmentRepository.findById(appointmentId).orElse(null);
+    }
+
+    public void saveAppointment(Appointment appointment) {
+        appointmentRepository.save(appointment);
+    }
+
+    public Iterable<Appointment> getAllAppointments() {
+        return appointmentRepository.findAll();
+    }
+}

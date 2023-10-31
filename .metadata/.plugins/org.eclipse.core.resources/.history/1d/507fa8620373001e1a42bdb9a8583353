@@ -1,0 +1,5 @@
+package webmvcdemo.controllers;
+
+public class DemoController {
+
+}

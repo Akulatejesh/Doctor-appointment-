@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to the Medical Center</title>
+</head>
+<body>
+    <h1>Welcome to the Medical Center</h1>
+    <ul>
+        <li><a href="<c:url value='/patients/list'/>">Patient List</a></li>
+        <li><a href="<c:url value='/doctors/list'/>">Doctor List</a></li>
+        <li><a href="<c:url value='/appointments/list'/>">Appointment List</a></li>
+    </ul>
+</body>
+</html>

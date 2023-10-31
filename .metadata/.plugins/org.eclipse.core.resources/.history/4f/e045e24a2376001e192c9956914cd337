@@ -1,0 +1,24 @@
+package com.project.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
+import com.project.demo.entities.Doctor;
+import com.project.demo.repository.DoctorRepository;
+
+@Controller
+public class DoctorDashboardController {
+    @Autowired
+    private DoctorRepository doctorRepository; // Inject DoctorRepository
+
+    @GetMapping("/receptionist/dashboard")
+    public String displayDashboard(Model model) {
+        // Get the list of doctors for the dropdown
+        List<Doctor> doctors = doctorRepository.findAll();
+        model.addAttribute("doctors", doctors);
+
+        return "receptionist-dashboard";
+    }
+}

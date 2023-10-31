@@ -1,0 +1,12 @@
+package com.demo.springdemo.library;
+ 
+import java.util.ArrayList;
+import java.util.List;
+ 
+public class CartComponent {
+	List<String> products=new ArrayList<String>();
+	public List<String> addProduct(String prd){
+		products.add(prd);
+		return products;
+	}
+}

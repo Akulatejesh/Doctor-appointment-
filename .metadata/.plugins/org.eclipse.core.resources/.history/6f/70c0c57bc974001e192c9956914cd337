@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Dr. John Doe</h1>
+    
+    <h2>Upcoming Appointments</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Appointment ID</th>
+                <th>Patient Name</th>
+                <th>Date & Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.id}">1</td>
+                <td th:text="${appointment.patient.name}">Alice</td>
+                <td th:text="${appointment.dateTime}">2023-11-01 10:00 AM</td>
+                <td>
+                    <a th:href="@{'/doctor/cancel/' + ${appointment.id}}">Cancel</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Leave Request</h2>
+    <form action="/doctor/leave" method="post">
+        <label for="leaveDate">Leave Date:</label>
+        <input type="date" id="leaveDate" name="leaveDate" required>
+        <button type="submit">Submit Leave Request</button>
+    </form>
+    
+    
+    
+    <a href="/logout">Logout</a>
+</body>
+</html>

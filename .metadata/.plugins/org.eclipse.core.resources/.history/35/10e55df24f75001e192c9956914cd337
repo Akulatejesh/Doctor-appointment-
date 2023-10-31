@@ -1,0 +1,28 @@
+package com.project.demo.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.project.demo.entities.DoctorsDetails;
+import com.project.demo.repository.DoctorsDetailsRepository;
+
+@Service
+public class DoctorsDetailsService {
+    @Autowired
+    private DoctorsDetailsRepository doctorsDetailsRepository;
+
+    public DoctorsDetails saveDoctorDetails(DoctorsDetails doctorDetails) {
+        return doctorsDetailsRepository.save(doctorDetails);
+    }
+
+    public Iterable<DoctorsDetails> getAllDoctors() {
+        return doctorsDetailsRepository.findAll();
+    }
+
+    public DoctorsDetails getDoctorDetailsById(Long id) {
+        return doctorsDetailsRepository.findById(id).orElse(null);
+    }
+
+    public void deleteDoctorDetails(Long id) {
+        doctorsDetailsRepository.deleteById(id);
+    }
+}

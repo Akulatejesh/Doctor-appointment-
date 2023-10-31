@@ -1,0 +1,34 @@
+package com.example.demo.controller;
+ 
+import java.util.ArrayList;
+import java.util.List;
+ 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+ 
+import com.example.demo.model.Product;
+ 
+ 
+ 
+@Controller
+public class ProductController {
+	@GetMapping("/display")
+	public String displayProduct(Model model) {
+		Product myprd=new Product(1,"Java",700);
+		model.addAttribute("product", myprd);
+		return "displayProduct";
+	}
+	@GetMapping("/displayList")
+	public String displayProductList(Model model) {
+		List<Product> prdlist=new ArrayList<Product>();
+		prdlist.add(new Product(1,"java",1000));
+		prdlist.add(new Product(2,"spring",1000));
+		model.addAttribute("displayList",prdlist);
+		return "productListing";
+	
+	}
+	
+	
+	
+}

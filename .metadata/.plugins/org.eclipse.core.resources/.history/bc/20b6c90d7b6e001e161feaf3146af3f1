@@ -1,0 +1,95 @@
+package javaassignment;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/TransferServlet")
+public class TransferServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+
+        if (session != null && session.getAttribute("userId") != null) {
+            String userId = (String) session.getAttribute("userId");
+            String destinationAccount = request.getParameter("destinationAccount");
+            double transferAmount = Double.parseDouble(request.getParameter("transferAmount"));
+
+            Connection connection = null;
+
+            try {
+                // Load the MySQL JDBC driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+                // Create a connection to the database
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank_db", "root", "Tejeshakula123@");
+
+                // Start a database transaction for the transfer
+                connection.setAutoCommit(false);
+
+                // Deduct the transfer amount from the user's account
+                String deductQuery = "UPDATE users SET balance = balance - ? WHERE user_id = ?";
+                PreparedStatement deductStatement = connection.prepareStatement(deductQuery);
+                deductStatement.setDouble(1, transferAmount);
+                deductStatement.setString(2, userId);
+                int rowsDeducted = deductStatement.executeUpdate();
+
+                // Check if the deduction was successful
+                if (rowsDeducted > 0) {
+                    // Now, add the transfer amount to the destination account
+                    String addQuery = "UPDATE users SET balance = balance + ? WHERE user_id = ?";
+                    PreparedStatement addStatement = connection.prepareStatement(addQuery);
+                    addStatement.setDouble(1, transferAmount);
+                    addStatement.setString(2, destinationAccount);
+                    int rowsAdded = addStatement.executeUpdate();
+
+                    // Commit the transaction
+                    connection.commit();
+
+                    if (rowsAdded > 0) {
+                        // Fund transfer successful
+                        response.sendRedirect("home.jsp");
+                    } else {
+                        // Handle the case where adding to the destination account fails
+                        response.sendRedirect("home.jsp");
+                    }
+                } else {
+                    // Handle the case where deduction from the user's account fails
+                    response.sendRedirect("home.jsp");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                // Roll back the transaction in case of an exception
+                try {
+                    if (connection != null) {
+                        connection.rollback();
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } finally {
+                    response.sendRedirect("home.jsp");
+                }
+            } finally {
+                try {
+                    if (connection != null) {
+                        connection.setAutoCommit(true);
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            response.sendRedirect("login.jsp");
+        }
+    }
+}

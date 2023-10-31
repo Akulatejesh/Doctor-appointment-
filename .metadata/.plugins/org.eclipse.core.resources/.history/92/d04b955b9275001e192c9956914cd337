@@ -1,0 +1,29 @@
+package com.project.demo.controller;
+
+
+import com.project.demo.entities.Doctor;
+import com.project.demo.repository.DoctorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+
+@Controller
+public class LoginDoctorController {
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @GetMapping("/receptionist/dashboard")
+    public String receptionistDashboard(Model model) {
+        // Get the list of doctors for the dropdown
+        List<Doctor> doctors = doctorRepository.findAll();
+        model.addAttribute("doctors", doctors);
+
+        return "receptionist-dashboard"; // Assuming you have a JSP file named "receptionist-dashboard.jsp"
+    }
+
+    // You can add additional methods for handling form submissions or other actions specific to the receptionist's dashboard
+}
+

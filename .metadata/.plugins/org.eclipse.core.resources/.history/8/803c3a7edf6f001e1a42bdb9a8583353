@@ -1,0 +1,7 @@
+hibernate.connection.driver_class=com.mysql.cj.jdbc.Driver
+hibernate.connection.url=jdbc:mysql://localhost:3306/hr
+hibernate.connection.username=Tester
+hibernate.connection.password=Tester
+hibernate.show_sql=true
+hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+hibernate.hbm2ddl.auto=create

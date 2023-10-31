@@ -1,0 +1,41 @@
+package com.project.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.project.demo.model.Patient;
+import com.project.demo.services.PatientService;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/patients")
+public class PatientController {
+
+    @Autowired
+    private PatientService patientService;
+
+    @GetMapping("/list")
+    public String listPatients(Model model) {
+        List<Patient> patients = patientService.getAllPatients();
+        model.addAttribute("patients", patients);
+        return "patient-list"; // Create a corresponding JSP view.
+    }
+
+    @GetMapping("/register")
+    public String showPatientRegistrationForm(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "patient-registration"; // Create a corresponding JSP view for registration.
+    }
+
+    @PostMapping("/register")
+    public String registerPatient(@ModelAttribute("patient") Patient patient) {
+        patientService.savePatient(patient);
+        return "redirect:/patients/list";
+    }
+}

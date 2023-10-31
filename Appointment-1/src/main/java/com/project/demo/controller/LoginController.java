@@ -1,0 +1,40 @@
+package com.project.demo.controller;
+
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpSession;
+
+
+@Controller
+public class LoginController {
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login"; // Assuming you have a JSP file named "login.jsp" for the login page
+    }
+
+    @PostMapping("/login")
+    public String login(
+        @RequestParam String username,
+        @RequestParam String password,
+        HttpSession session
+    ) {
+        if ("admin".equals(username) && "adminpass".equals(password)) {
+            // Admin login successful
+            session.setAttribute("loggedInUser", username);
+            return "redirect:/adashboard.jsp"; // Redirect to the admin dashboard (adashboard)
+        } else if ("user123".equals(username) && "userpass".equals(password)) {
+            // User login successful
+            session.setAttribute("loggedInUser", username);
+            return "redirect:/udashboard.jsp"; // Redirect to the user dashboard (udashboard)
+        } else {
+            // Authentication failed
+            return "redirect:/login?error=true"; // Login page with an error message
+        }
+    }
+}
+

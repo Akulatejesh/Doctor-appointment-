@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Doctor's Appointment System</title>
+</head>
+<body>
+<h1>Doctor's Appointment System</h1>
+
+<a href="/book-appointment">Book an Appointment</a>
+<a href="/view-appointment">View Appointments</a>
+</body>
+</html>

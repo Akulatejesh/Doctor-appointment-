@@ -1,0 +1,41 @@
+package com.project.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.project.demo.entities.Receptionist;
+import com.project.demo.services.ReceptionistService;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+public class ReceptionistController {
+    @Autowired
+    private ReceptionistService receptionistService;
+
+    @GetMapping("/receptionist/login")
+    public String loginPage() {
+        return "receptionist-login"; // Assuming you have a JSP file named "receptionist-login.jsp"
+    }
+
+    @GetMapping("/receptionist/dashboard")
+    public String dashboardPage() {
+        return "receptionist-dashboard"; // Assuming you have a JSP file for the receptionist's dashboard
+    }
+
+    @PostMapping("/receptionist/login")
+    public String login(@RequestParam String user, @RequestParam String pass, HttpSession session) {
+        Receptionist receptionistFromDB = receptionistService.findReceptionistByUsernameAndPassword(user, pass);
+
+        if (receptionistFromDB != null) {
+            // Authentication successful
+            session.setAttribute("loggedInReceptionist", receptionistFromDB);
+            return "redirect:/receptionist/dashboard"; // Redirect to the receptionist's dashboard page
+        } else {
+            // Authentication failed
+            return "redirect:/receptionist/error"; // Receptionist login page with an error message
+        }
+    }
+}

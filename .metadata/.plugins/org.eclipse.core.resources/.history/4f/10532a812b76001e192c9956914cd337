@@ -1,0 +1,38 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Doctor's Dashboard</title>
+</head>
+<body>
+<h2>Doctor's Dashboard</h2>
+
+<h3>Patients Assigned to You:</h3>
+
+<table border="1">
+    <tr>
+        <th>Patient Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Appointment Date</th>
+        <th>Appointment Time</th>
+    </tr>
+    <c:forEach items="${patients}" var="patient">
+        <c:if test="${patient.doctor.id == sessionScope.loggedInDoctor.id}">
+            <tr>
+                <td>${patient.patientName}</td>
+                <td>${patient.age}</td>
+                <td>${patient.address}</td>
+                <td>${patient.phoneNumber}</td>
+                <td>${patient.appointmentDate}</td>
+                <td>${patient.appointmentTime}</td>
+            </tr>
+        </c:if>
+    </c:forEach>
+</table>
+
+<a href="/logout">Logout</a>
+</body>
+</html>

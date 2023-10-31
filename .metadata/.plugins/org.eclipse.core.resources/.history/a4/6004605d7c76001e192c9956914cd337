@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>KTHJ Hospital</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('hospital-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            background-color: #007BFF; /* Blue background */
+            color: #fff; /* White heading text */
+            text-align: center;
+            padding: 20px 0; /* Larger padding for the heading */
+            margin: 0;
+            font-size: 36px; /* Larger font size */
+            position: relative; /* Position for absolute buttons */
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .login-button {
+            background-color: #ff6f61; /* Salmon color */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            position: absolute; /* Position buttons absolutely */
+            top: 100%; /* Move buttons below the heading */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            margin: 10px;
+        }
+
+        .login-button:hover {
+            background-color: #ff402e; /* Darker salmon on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>KTHJ Hospital
+        <div class="button-container">
+            <a class="login-button" href="/login">Doctor Login</a>
+            <a class="login-button" href="/receptionist/login">Receptionist Login</a>
+            <a class="login-button" href="/administrator/login">Admin Login</a>
+        </div>
+    </h1>
+</body>
+</html>

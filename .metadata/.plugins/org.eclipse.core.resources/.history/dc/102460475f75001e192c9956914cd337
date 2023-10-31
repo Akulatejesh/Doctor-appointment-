@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="java.util.List"%>
+<%@page import="com.project.demo.entities.Appointment"%>
+<%@page import="com.project.demo.entities.DoctorsDetails"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor's Dashboard</title>
+</head>
+<body>
+
+<h2>Doctor's Dashboard</h2>
+
+<h3>Appointments</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Appointment ID</th>
+            <th>Patient Name</th>
+            <th>Appointment Date</th>
+            <th>Appointment Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach items="${appointments}" var="appointment">
+            <tr>
+                <td>${appointment.id}</td>
+                <td>${appointment.patientDetails.patientName}</td>
+                <td>${appointment.appointmentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))}</td>
+                <td>${appointment.appointmentTime.format(DateTimeFormatter.ofPattern("HH:mm"))}</td>
+                <td>
+                    <a href="/doctor/markLeave?id=${appointment.id}">Mark Leave</a>
+                    <a href="/doctor/cancelAppointment?id=${appointment.id}">Cancel Appointment</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+<h3>Leave</h3>
+<form action="/doctor/markLeave" method="post">
+    <div>
+        <label for="leaveDate">Leave Date:</label>
+        <input type="date" id="leaveDate" name="leaveDate" required>
+    </div>
+    <div>
+        <button type="submit">Mark Leave</button>
+    </div>
+</form>
+
+<a href="/logout">Logout</a>
+
+</body>
+</html>

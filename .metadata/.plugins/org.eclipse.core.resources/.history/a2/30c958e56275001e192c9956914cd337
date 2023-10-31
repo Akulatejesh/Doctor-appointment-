@@ -1,0 +1,25 @@
+package com.project.demo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
+
+@Controller
+public class AdminDashboardController {
+
+    @GetMapping("/adashboard")
+    public String adminDashboard(Model model) {
+        // Get the logged-in user from the session
+        String loggedInUser = (String) model.asMap().get("loggedInUser");
+
+        // If the user is not logged in, redirect to the login page
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        // Return the admin dashboard view
+        return "adashboard";
+    }
+}

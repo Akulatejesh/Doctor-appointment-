@@ -1,0 +1,84 @@
+package com.project.demo.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+@Entity
+@Table(name = "patientdetails")
+public class PatientDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String patientName;
+    private String patientInfo;
+    
+    // Additional patient details
+    private int age;
+    private String address;
+    private String phoneNumber;
+
+    // Constructors
+    public PatientDetails() {
+    }
+
+    public PatientDetails(String patientName, String patientInfo, int age, String address, String phoneNumber) {
+        this.patientName = patientName;
+        this.patientInfo = patientInfo;
+        this.age = age;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getPatientInfo() {
+        return patientInfo;
+    }
+
+    public void setPatientInfo(String patientInfo) {
+        this.patientInfo = patientInfo;
+    }
+    
+    // Additional getters and setters for new fields
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+}

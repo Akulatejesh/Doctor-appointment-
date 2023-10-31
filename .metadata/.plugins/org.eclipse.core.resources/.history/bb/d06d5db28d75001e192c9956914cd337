@@ -1,0 +1,52 @@
+
+package com.project.demo.controller;
+
+import com.project.demo.entities.Doctor;
+import com.project.demo.repository.DoctorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+import java.util.List;
+
+@Controller
+public class DoctorController {
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        List<Doctor> doctors = doctorRepository.findAll();
+        model.addAttribute("doctors", doctors);
+        return "login"; // Assuming you have a JSP file named "login.jsp" for doctor login
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboardPage() {
+        return "dashboard"; // Assuming you have a JSP file for the doctor's dashboard
+    }
+
+    @PostMapping("/login")
+    public String login(
+        @RequestParam String user,
+        @RequestParam String pass,
+        @RequestParam Long selectedDoctorId, // Add a parameter to receive the selected doctor's ID
+        HttpSession session
+    ) {
+        Doctor doctorFromDB = doctorRepository.findByUsernameAndPassword(user, pass);
+
+        if (doctorFromDB != null) {
+            // Authentication successful
+            session.setAttribute("loggedInDoctor", doctorFromDB);
+            // You can use the selectedDoctorId to determine which doctor was selected during login
+            return "redirect:/dashboard"; // Redirect to the doctor's dashboard page
+        } else {
+            // Authentication failed
+            return "redirect:/error"; // Doctor login page with an error message
+        }
+    }
+}

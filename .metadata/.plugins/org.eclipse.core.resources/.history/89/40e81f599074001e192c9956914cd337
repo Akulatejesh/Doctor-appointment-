@@ -1,0 +1,28 @@
+package com.project.demo.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.demo.model.Patient;
+import com.project.demo.repositories.PatientRepository;
+
+import java.util.List;
+
+@Service
+public class PatientService {
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
+    }
+
+    public Patient getPatientById(Long patientId) {
+        return patientRepository.findById(patientId).orElse(null);
+    }
+
+    public void savePatient(Patient patient) {
+        patientRepository.save(patient);
+    }
+}

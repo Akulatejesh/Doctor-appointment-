@@ -1,0 +1,16 @@
+package com.project.demo.services;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class DoctorService {
+
+    public boolean validateDoctorCredentials(String username, String password) {
+        // Define the expected doctor credentials
+        String expectedUsername = "doctor1";
+        String expectedPassword = "p1";
+
+        // Validate if the provided credentials match the expected values
+        return username.equals(expectedUsername) && password.equals(expectedPassword);
+    }
+}

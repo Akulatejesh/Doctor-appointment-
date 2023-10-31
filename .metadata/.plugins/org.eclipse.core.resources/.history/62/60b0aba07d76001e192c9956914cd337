@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>KTHJ Hospital</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Antique-style font */
+            margin: 0;
+            padding: 0;
+            background: url('hospital-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            background-color: #DAA520; /* Antique gold background */
+            color: #8B4513; /* Antique brown heading text */
+            text-align: center;
+            padding: 30px 0; /* Larger padding for the heading */
+            margin: 0;
+            font-size: 60px; /* Larger font size for the heading */
+            font-family: 'Bookman Old Style', Garamond, 'Times New Roman', serif; /* Antique-style font */
+            border-top: 5px solid #4CAF50; /* Green top border for a touch of elegance */
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .login-button {
+            background-color: #DAA520; /* Antique gold button background */
+            color: #8B4513; /* Antique brown button text */
+            padding: 15px 30px; /* Larger padding for buttons */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 15px;
+            display: inline-block;
+            font-size: 24px; /* Larger font size for buttons */
+            transition: background-color 0.3s; /* Smooth hover effect */
+        }
+
+        .login-button:hover {
+            background-color: #CD853F; /* Slightly darker antique gold on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>KTHJ Hospital</h1>
+    <div class="button-container">
+        <a class="login-button" href="/receptionist/login">Receptionist Login</a>
+        <a class="login-button" href="/login">Doctor Login</a>
+        <a class="login-button" href="/administrator/login">Admin Login</a>
+    </div>
+</body>
+</html>

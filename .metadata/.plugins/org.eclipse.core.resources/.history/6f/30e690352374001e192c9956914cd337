@@ -1,0 +1,73 @@
+package com.project.demo.controller;
+
+import java.sql.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.project.demo.model.Appointment;
+import com.project.demo.model.Doctor;
+import com.project.demo.model.Patient;
+import com.project.demo.services.AppointmentService;
+import com.project.demo.services.DoctorService;
+import com.project.demo.services.PatientService;
+
+@Controller
+public class AppointmentController {
+
+    @Autowired
+
+    
+private PatientService patientService;
+
+    @Autowired
+
+    
+private DoctorService doctorService;
+
+    @Autowired
+
+    
+private AppointmentService appointmentService;
+
+    @GetMapping("/")
+    public String home() {
+        return "index";
+    }
+
+    @PostMapping("/book-appointment")
+    public String bookAppointment(@RequestParam("patientId") Long patientId,
+                                 @RequestParam("doctorId") Long doctorId,
+                                 @RequestParam("appointmentDate") Date appointmentDate) {
+
+        Patient patient = patientService.getPatientById(patientId);
+        Doctor doctor = doctorService.getDoctorById(doctorId);
+
+        Appointment appointment = new Appointment();
+        appointment.setPatient(patient);
+        appointment.setDoctor(doctor);
+        appointment.setAppointmentDate(appointmentDate);
+
+        appointmentService.saveAppointment(appointment);
+
+        return "redirect:/view-appointments";
+    }
+
+    @GetMapping("/view-appointments")
+ 
+   
+public String viewAppointments(Model model)
+ 
+{
+        List<Appointment> upcomingAppointments = appointmentService.getAllAppointments();
+        model.addAttribute("upcomingAppointments", upcomingAppointments);
+        return
+ 
+"view-appointments";
+    }
+}

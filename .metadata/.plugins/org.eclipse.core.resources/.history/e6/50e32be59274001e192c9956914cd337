@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@ page import="java.util.List" %>
+<%@ page import="com.project.demo.model.Appointment" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Appointments</title>
+</head>
+<body>
+    <h1>View Appointments</h1>
+
+    <table>
+        <tr>
+            <th>Patient ID</th>
+            <th>Doctor ID</th>
+            <th>Appointment Date</th>
+        </tr>
+
+        <% List<Appointment> upcomingAppointments = (List<Appointment>) request.getAttribute("upcomingAppointments"); %>
+
+        <% for (Appointment appointment : upcomingAppointments) { %>
+        <tr>
+            <td><%= appointment.getPatient().getId() %></td>
+            <td><%= appointment.getDoctor().getId() %></td>
+            <td><%= appointment.getAppointmentDate() %></td>
+        </tr>
+        <% } %>
+    </table>
+</body>
+</html>

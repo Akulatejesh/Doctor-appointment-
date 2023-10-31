@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Doctor's Appointment System</title>
+</head>
+<body>
+<h1>Doctor's Appointment System</h1>
+
+
+<%-- <spring:form action="/book-appointment" method="get" >
+<input type="submit" value="Submit">
+</spring:form> --%>
+ <a href="book-appointment.jsp">Book an Appointment</a>
+<a href="view-appointment.jsp">View Appointments</a> 
+</body>
+</html>

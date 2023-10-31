@@ -1,0 +1,10 @@
+package com.project.demo.services;
+
+public class PatientService {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

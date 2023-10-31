@@ -1,0 +1,43 @@
+package javaassignment;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
+        double initialBalance = Double.parseDouble(request.getParameter("initialBalance"));
+
+        Connection connection = DatabaseConnection.getConnection();
+
+        if (connection != null) {
+            try {
+                String query = "INSERT INTO users (user_id, password, balance) VALUES (?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, userId);
+                preparedStatement.setString(2, password);
+                preparedStatement.setDouble(3, initialBalance);
+
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+                connection.close();
+
+                response.sendRedirect("login.jsp"); // Redirect to the login page after successful registration
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

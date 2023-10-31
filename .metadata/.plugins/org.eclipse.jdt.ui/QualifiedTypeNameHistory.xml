@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="java.io.Serializable"/>
+    <fullyQualifiedTypeName name="javaassignment.DatabaseConnection"/>
+    <fullyQualifiedTypeName name="com.demo.springdemo.SpringConfiguration"/>
+    <fullyQualifiedTypeName name="com.demo.hybernatedemo.entities.Project"/>
+    <fullyQualifiedTypeName name="com.demo.hybernatedemo.entities.Employee"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="ch.qos.logback.core.model.Model"/>
+    <fullyQualifiedTypeName name="com.example.demo.model.Product"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Entity"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
+    <fullyQualifiedTypeName name="com.example.demo.repositories.ProductRepositoty"/>
+</qualifiedTypeNameHistroy>

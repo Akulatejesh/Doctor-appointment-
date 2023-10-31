@@ -1,0 +1,41 @@
+package com.project.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.project.demo.entities.Administrator;
+import com.project.demo.services.AdministratorService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.ui.Model;
+
+@Controller
+public class AdministratorController {
+    @Autowired
+    private AdministratorService administratorService;
+
+    @GetMapping("/administrator/login")
+    public String loginPage(Model model) {
+        model.addAttribute("userType", "administrator");
+        return "administrator-login";
+    }
+
+    @GetMapping("/administrator/dashboard")
+    public String dashboardPage() {
+        return "administrator-dashboard";
+    }
+
+    @PostMapping("/administrator/login")
+    public String login(@RequestParam String user, @RequestParam String pass, HttpSession session) {
+        Administrator administratorFromDB = administratorService.findAdministratorByUsernameAndPassword(user, pass);
+
+        if (administratorFromDB != null) {
+            session.setAttribute("loggedInAdministrator", administratorFromDB);
+            return "redirect:/administrator/dashboard";
+        } else {
+            return "redirect:/aerror";
+        }
+    }
+}

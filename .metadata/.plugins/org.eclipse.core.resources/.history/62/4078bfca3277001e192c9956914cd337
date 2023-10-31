@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Choice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            border-radius: 10px 10px 0 0;
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 300px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:first-child {
+            margin-right: 5px;
+        }
+
+        div {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome to the KTHJ Portal</h2>
+    <form>
+        <div>
+            <button type="submit" formaction="/patientregistration">Register</button>
+            <button type="submit" formaction="/patientlogin">Login</button>
+        </div>
+    </form>
+</body>
+</html>

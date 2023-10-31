@@ -1,0 +1,35 @@
+package com.project.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.project.demo.model.Doctor;
+import com.project.demo.services.DoctorService;
+
+@Controller
+@RequestMapping("/doctors")
+public class DoctorController {
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @GetMapping("/list")
+    public String listDoctors(Model model) {
+        List<Doctor> doctors = doctorService.getAllDoctors();
+        model.addAttribute("doctors", doctors);
+        return "doctor-list"; // Create a corresponding JSP view.
+    }
+
+    @GetMapping("/manage")
+    public String showDoctorManagement(Model model) {
+        // Add logic to display doctor management interface.
+        return "doctor-management"; // Create a corresponding JSP view.
+    }
+    // Define other doctor-related request handlers here.
+}
+

@@ -1,0 +1,36 @@
+package javaassignment;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
+
+        // Check the user's credentials (e.g., by querying a database)
+        if (isValidUser(userId, password)) {
+            // If valid, set the user session
+            HttpSession session = request.getSession(true);
+            session.setAttribute("userId", userId);
+
+            // Redirect to the home page
+            response.sendRedirect("home.jsp");
+        } else {
+            // If login fails, redirect back to the login page
+            response.sendRedirect("login.jsp");
+        }
+    }
+
+    private boolean isValidUser(String userId, String password) {
+        // Replace this logic with your authentication mechanism (e.g., database query)
+        // Check if the user exists and the password matches
+        // Return true if the user is valid, otherwise return false
+        return userId.equals("exampleUser") && password.equals("examplePassword");
+    }
+}

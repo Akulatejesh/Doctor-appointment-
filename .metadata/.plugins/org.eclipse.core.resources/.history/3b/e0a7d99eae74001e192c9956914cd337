@@ -1,0 +1,43 @@
+package com.project.demo.controllers;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+ 
+
+import com.project.demo.repositories.DoctorRepository;
+ 
+import jakarta.servlet.http.HttpSession;
+ 
+@Controller
+public class LoginController {
+    @Autowired
+    private DoctorRepository userRepository;
+ 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+    @GetMapping("/dashboard")
+    public String dashboardPage() {
+    	return "dashboard";
+    }
+ 
+    @PostMapping("/login")
+    public String login(@RequestParam String user, @RequestParam String pass, HttpSession session) {
+        User userFromDB = userRepository.findByUsernameAndPassword(user, pass);
+        if (userFromDB != null) {
+          
+            session.setAttribute("loggedInUser", userFromDB);
+            return "redirect:/dashboard"; 
+        } else {
+            
+            return "redirect:/error"; 
+        }
+    }
+}
+ 

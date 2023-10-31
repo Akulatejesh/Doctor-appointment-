@@ -1,0 +1,46 @@
+package com.project.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.project.demo.entities.PatientDetails;
+import com.project.demo.entities.DoctorsDetails;
+import com.project.demo.repository.PatientDetailsRepository;
+import com.project.demo.services.DoctorsDetailsService;
+
+@Controller
+public class PatientDetailsController {
+    @Autowired
+    private PatientDetailsRepository patientDetailsRepository;
+
+    @Autowired
+    private DoctorsDetailsService doctorsDetailsService;
+
+    @PostMapping("/receptionist/patient-details")
+    public String addPatientDetails(
+            @RequestParam String patientName,
+            @RequestParam String patientInfo,
+            @RequestParam int age,
+            @RequestParam String address,
+            @RequestParam String phoneNumber,
+            @RequestParam String doctorName,
+            @RequestParam String doctorSpecialization
+    ) {
+        DoctorsDetails doctor = doctorsDetailsService.getDoctorByNameAndSpecialization(doctorName, doctorSpecialization);
+
+        if (doctor != null) {
+            PatientDetails patient = new PatientDetails();
+            patient.setPatientName(patientName);
+            patient.setPatientInfo(patientInfo);
+            patient.setAge(age);
+            patient.setAddress(address);
+            patient.setPhoneNumber(phoneNumber);
+            patient.setAssignedDoctor(doctor);
+
+            patientDetailsRepository.save(patient);
+        }
+
+        return "redirect:/receptionist/dashboard";
+    }
+}

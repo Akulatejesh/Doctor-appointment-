@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator Dashboard</title>
+</head>
+<body>
+    <h2>Administrator Dashboard</h2>
+
+    <h3>All Doctors</h3>
+    <table border="1">
+        <tr>
+            <th>Doctor ID</th>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Specialization</th>
+            <th>Leave Requested</th>
+            <th>Leave Start Date</th>
+            <th>Leave End Date</th>
+            <th>Availability</th>
+        </tr>
+        <c:forEach items="${allDoctors}" var="doctor">
+            <tr>
+                <td>${doctor.id}</td>
+                <td>${doctor.fullName}</td>
+                <td>${doctor.username}</td>
+                <td>${doctor.specialization}</td>
+                <td>${doctor.leaveRequested}</td>
+                <td>${doctor.leaveStartDate}</td>
+                <td>${doctor.leaveEndDate}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${doctor.leaveRequested == true}">
+                            Not Available
+                        </c:when>
+                        <c:otherwise>
+                            Available
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+
+    <a href="/administrator/logout">Logout</a>
+</body>
+</html>

@@ -1,0 +1,22 @@
+package com.project.demo.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.demo.model.Doctor;
+import com.project.demo.repositories.DoctorRepository;
+
+public class DoctorService {
+@Autowired
+private DoctorRepository doctorRepository;
+
+public void registerUser(String username, String password) {
+    Doctor user = new Doctor();
+    user.setUsername(username);
+    user.setPassword(password);
+    doctorRepository.save(user);
+}
+
+public Doctor findByUsernameAndPassword(String username,String password) {
+    return DoctorRepository.findByUsernameAndPassword(username,password);
+}
+}
